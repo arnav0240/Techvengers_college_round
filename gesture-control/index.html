@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gesture Control</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>Gesture Control</h1>
+        <p class="subtitle">Head cursor + pinch click</p>
+      </div>
+      <div class="pills">
+        <div class="status-pill" id="cameraPill">
+          <span class="dot" id="cameraDot"></span>
+          <span id="cameraPillText">Camera stopped</span>
+        </div>
+        <div class="status-pill" id="facePill">
+          <span class="dot" id="faceDot"></span>
+          <span id="facePillText">Face detector loading…</span>
+        </div>
+        <div class="status-pill" id="handPill">
+          <span class="dot" id="handDot"></span>
+          <span id="handPillText">Hand detector loading…</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card video-card">
+        <div class="video-wrap">
+          <video
+            id="webcam"
+            autoplay
+            muted
+            playsinline
+            width="640"
+            height="480"
+          ></video>
+          <canvas id="overlay" width="640" height="480"></canvas>
+          <div class="live-badge hidden" id="liveBadge">● LIVE</div>
+          <div class="mode-badge scroll" id="modeBadge">SCROLL MODE</div>
+          <div class="command-badge idle" id="commandBadge">READY</div>
+        </div>
+
+        <div class="controls">
+          <button id="startBtn" type="button">Start Camera</button>
+          <button id="stopBtn" type="button" class="secondary">
+            Stop Camera
+          </button>
+        </div>
+
+        <div class="head-controls">
+          <div class="head-row">
+            <button id="calibrateBtn" type="button" class="accent">
+              Calibrate neutral
+            </button>
+            <button id="recenterBtn" type="button" class="secondary">
+              Recentre cursor
+            </button>
+          </div>
+          <div class="head-row">
+            <button id="browserBtn" type="button">Launch Browser</button>
+          </div>
+          <label class="slider-row" for="sensitivity">
+            Sensitivity
+            <input
+              id="sensitivity"
+              type="range"
+              min="3"
+              max="18"
+              step="0.5"
+              value="9"
+            />
+            <span id="sensitivityVal">9.0</span>
+          </label>
+          <label class="slider-row" for="deadzone">
+            Stop-circle radius
+            <input
+              id="deadzone"
+              type="range"
+              min="0.005"
+              max="0.05"
+              step="0.001"
+              value="0.025"
+            />
+            <span id="deadzoneVal">0.025</span>
+          </label>
+          <p class="hint">
+            Look straight ahead, hold still, then press
+            <b>Calibrate neutral</b>. An XY axis appears at your neutral nose:
+            inside the circle the cursor stops, outside it moves — gently at the
+            rim, faster the farther you lean. Pinch thumb + index to click.
+          </p>
+        </div>
+
+        <p class="status-line" id="cameraStatus">Starting camera…</p>
+        <p class="status-line" id="browserStatus">
+          Gesture browser not launched.
+        </p>
+        <p class="status-line" id="headStatus">Loading face detector…</p>
+        <p class="status-line" id="handStatus">Loading hand detector…</p>
+        <div class="error-box hidden" id="errorBox"></div>
+      </section>
+
+      <aside class="card info-card">
+        <h2>How to drive it</h2>
+        <ol>
+          <li>
+            🧭 <b>Calibrate:</b> look straight ahead, hold still, press
+            <b>Calibrate neutral</b>.
+          </li>
+          <li>
+            🗺️ <b>Steer:</b> lean out of the circle around your neutral nose —
+            the crosshair moves faster the farther you go. Drift back inside to
+            stop.
+          </li>
+          <li>
+            🤏 <b>Pinch thumb + index</b> → CLICK. Release to re-arm the next
+            click.
+          </li>
+          <li>
+            🖐️ <b>Open palm, hold still</b> → PAUSED (any gesture resumes).
+          </li>
+          <li>☝️ <b>Point up / down</b> → SCROLL UP / DOWN (scroll mode).</li>
+          <li>✊ <b>Fist, hold briefly</b> → CURSOR mode badge.</li>
+          <li>✌️ <b>Two fingers, hold 0.7s</b> → SCROLL mode badge.</li>
+        </ol>
+        <p class="hint">
+          Dots are the 21 MediaPipe landmarks. Next stage we turn their movement
+          into scroll up / scroll down / stop gestures.
+        </p>
+        <details class="debug">
+          <summary>🔍 Live detector readout (for guided testing)</summary>
+          <pre id="debugPre">waiting for camera…</pre>
+        </details>
+      </aside>
+    </main>
+
+    <script type="module" src="/src/renderer.ts"></script>
+  </body>
+</html>

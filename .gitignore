@@ -1,0 +1,15 @@
+# deps / build output — never commit
+node_modules/
+.vite/
+dist/
+build/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# runtime / local sockets
+.ydotool_socket
+*.log
