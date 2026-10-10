@@ -17,20 +17,21 @@ webcam ─┬─ Face Landmarker ─> nose tip ─> HeadCursorController ─> re
 
 **All coordinates are normalized `0–1`.** MediaPipe returns normalized landmarks; the app integrates them into normalized deltas (`X_os += dx × screenW`). Pixel math happens only at the OS bridge.
 
-## Gestures
+## Gestures ✋
 
-| Do this | Action |
-|---|---|
-| 🗺️ Lean head out of circle | Move cursor (farther = faster) |
-| 🤏 Pinch thumb + index (release to re-arm) | **CLICK** at current cursor |
-| ☝️ Point index up / down, hold (scroll mode) | **SCROLL UP / DOWN** (repeats) |
-| 🖐️ Open palm, hold ~0.4s | **PAUSED** (any gesture resumes) |
-| ✊ Fist, hold briefly | **CURSOR mode** badge |
-| ✌️ Two fingers, hold 0.7s | **SCROLL mode** badge (default) |
-| 👍 Thumbs up | **CONFIRM** + `is_confirm=True` (change-only) |
-| 👎 Thumbs down | **CANCEL** + `is_confirm=False` (change-only) |
+| Sign | Gesture | How to perform | Result |
+|:----:|---|---|---|
+| 🗺️ | **Head steer** | Lean head out of the stop-circle, hold the lean | 🖱️ Cursor moves — farther lean = faster; back inside = stop |
+| 🤏 | **Pinch** | Touch thumb + index, then release to re-arm | 👆 **CLICK** at the current cursor |
+| ☝️ | **Point up** | Index up, hold — SCROLL mode | ⬆️ **SCROLL UP**, repeats while held |
+| 👇 | **Point down** | Index down, hold — SCROLL mode | ⬇️ **SCROLL DOWN**, repeats while held |
+| 🖐️ | **Open palm** | Spread hand, hold still ~0.4s | ⏸️ **PAUSED** — any gesture resumes |
+| ✊ | **Fist** | Ball fist, hold briefly ~0.25s | 🔵 **MODE: CURSOR** badge |
+| ✌️ | **Two fingers** | Index + middle up, hold 0.7s | 🟢 **MODE: SCROLL** badge (default) |
+| 👍 | **Thumbs up** | Fist + thumb straight up, hold | ✅ **CONFIRM** + `is_confirm=True` (fires once) |
+| 👎 | **Thumbs down** | Fist + thumb straight down, hold | ❌ **CANCEL** + `is_confirm=False` (fires once) |
 
-Sideways points read as neutral (no action). The on-screen debug readout shows live detector internals + `is_confirm` + a `gesture-confirm` window event fires on every flip.
+> ↔️ Sideways points read as **neutral** (no action). 🔍 The on-screen debug readout shows live detector internals + `is_confirm`, and a `gesture-confirm` window event fires on every flip.
 
 ## Run
 
