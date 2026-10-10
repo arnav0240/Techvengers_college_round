@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NOVA</title>
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <!-- Mobile layout for the NOVA assistant, shown in Chrome's side panel. -->
+  <body>
+    <header class="top">
+      <div class="brand">
+        <span id="connDot" class="dot"></span>
+        <span class="name">NOVA</span>
+      </div>
+      <div class="top-actions">
+        <button id="webcamBtn" class="chip" title="Toggle webcam">CAM</button>
+        <button id="expandBtn" class="chip" title="Open the full NOVA webapp">EXPAND</button>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="orb-wrap">
+        <div id="orb" class="orb">
+          <div class="orb-core"></div>
+          <div id="transcript" class="transcript" aria-live="polite"></div>
+        </div>
+        <video id="webcam" class="webcam" autoplay playsinline muted></video>
+      </div>
+
+      <div class="hint" id="hint">Say “Hey Nova” or tap the mic</div>
+    </main>
+
+    <section class="controls">
+      <button id="micBtn" class="mic" aria-label="Start listening">
+        <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"
+          />
+        </svg>
+      </button>
+      <input
+        id="typeBox"
+        class="type"
+        type="text"
+        placeholder="…or type a command"
+        autocomplete="off"
+      />
+      <button id="sendBtn" class="send" aria-label="Send command">▶</button>
+    </section>
+
+    <section class="status">
+      <div class="status-row">
+        <span class="label">Service</span>
+        <span id="serviceState" class="value">connecting…</span>
+      </div>
+      <div class="status-row">
+        <span class="label">Request</span>
+        <span id="requestState" class="value">idle</span>
+      </div>
+      <div class="progress"><div id="progressFill" class="progress-fill"></div></div>
+    </section>
+
+    <section class="timeline">
+      <div class="timeline-title">ACTIVITY</div>
+      <ul id="eventList" class="event-list">
+        <li class="event event-muted">Waiting for the first event…</li>
+      </ul>
+    </section>
+
+    <footer class="foot">
+      <span id="footerNote">Handsfree — NOVA · side panel</span>
+    </footer>
+
+    <script src="panel.js"></script>
+  </body>
+</html>

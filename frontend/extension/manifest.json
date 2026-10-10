@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "NOVA — Hands-Free Assistant",
+  "version": "1.0.0",
+  "description": "Say \"Hey Nova\" to open the mobile assistant. Speak a browser command and watch it execute in a real Chrome window. Expand for the full NOVA webapp.",
+  "permissions": ["offscreen", "sidePanel", "storage", "tabs"],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*",
+    "http://localhost:8787/*",
+    "http://127.0.0.1:5173/*",
+    "http://localhost:5173/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_title": "Open NOVA",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "side_panel": { "default_path": "panel.html" }
+}

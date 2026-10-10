@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #03040b;
+  --color-abyss: #070a17;
+  --color-elevated: #0b1024;
+  --color-nova-purple: #7c3cff;
+  --color-nova-violet: #a855f7;
+  --color-nova-blue: #315bff;
+  --color-nova-cyan: #39d8ff;
+  --color-ink: #f5f7ff;
+  --color-ink-2: #9aa7cb;
+  --color-ink-3: #68769a;
+  --color-mint: #31e8c0;
+  --color-amber-soft: #ffc56b;
+  --color-rose-soft: #ff6488;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+  background: #03040b;
+  color: #f5f7ff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(57, 216, 255, 0.45);
+}
+
+/* ---------- HUD design system ---------- */
+
+.hud-panel {
+  position: relative;
+  background: rgba(7, 10, 23, 0.82);
+  border: 1px solid rgba(57, 216, 255, 0.2);
+  box-shadow:
+    inset 0 0 32px -24px rgba(57, 216, 255, 0.9),
+    0 10px 30px -18px rgba(49, 91, 255, 0.55);
+}
+.hud-panel::before,
+.hud-panel::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: rgba(57, 216, 255, 0.75);
+  box-shadow: 0 0 6px rgba(57, 216, 255, 0.7);
+  pointer-events: none;
+}
+.hud-panel::before {
+  top: -1px;
+  right: -1px;
+}
+.hud-panel::after {
+  bottom: -1px;
+  left: -1px;
+}
+
+.hud-title {
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #39d8ff;
+  line-height: 1.4;
+}
+
+.hud-mono {
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+}
+
+/* Technical HUD corner brackets for the main viewport */
+.hud {
+  position: relative;
+}
+.hud::before,
+.hud::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(57, 216, 255, 0.5);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 20;
+}
+.hud::before {
+  top: 8px;
+  left: 8px;
+  border-width: 1.5px 0 0 1.5px;
+  border-top-left-radius: 5px;
+}
+.hud::after {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 1.5px 1.5px 0;
+  border-bottom-right-radius: 5px;
+}
+
+.deck-glow {
+  box-shadow:
+    0 0 0 1px rgba(57, 216, 255, 0.3),
+    0 0 36px -14px rgba(124, 60, 255, 0.9),
+    inset 0 0 30px -22px rgba(57, 216, 255, 0.9);
+}
+
+.nova-transition {
+  transition: opacity 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.nova-chip {
+  transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+.nova-chip:hover {
+  border-color: rgba(57, 216, 255, 0.6);
+  color: #fff;
+  background-color: rgba(57, 216, 255, 0.09);
+}
+
+kbd.nova-kbd {
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #9aa7cb;
+}
+
+/* ---------- animations ---------- */
+
+@keyframes nova-pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px 2px rgba(57, 216, 255, 0.7); }
+  50% { opacity: 0.55; box-shadow: 0 0 4px 0 rgba(57, 216, 255, 0.35); }
+}
+.nova-live-dot {
+  animation: nova-pulse-dot 2.2s ease-in-out infinite;
+}
+
+@keyframes nova-spin {
+  to { transform: rotate(360deg); }
+}
+.reticle-spin {
+  animation: nova-spin 90s linear infinite;
+}
+.reticle-spin-rev {
+  animation: nova-spin 60s linear infinite reverse;
+}
+
+@keyframes nova-scan {
+  0% { top: -12%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { top: 108%; opacity: 0; }
+}
+.nova-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, rgba(57, 216, 255, 0.055), transparent);
+  animation: nova-scan 8s linear infinite;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes nova-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.nova-fade-up {
+  animation: nova-fade-up 0.35s ease both;
+}
+
+:focus-visible {
+  outline: 2px solid #39d8ff;
+  outline-offset: 2px;
+}
+
+.nova-input:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-live-dot, .nova-fade-up, .nova-scan, .reticle-spin, .reticle-spin-rev {
+    animation: none;
+  }
+  .nova-transition {
+    transition: none;
+  }
+}
