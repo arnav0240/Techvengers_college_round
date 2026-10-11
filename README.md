@@ -16,7 +16,6 @@ One repo, four folder-wise components that run independently or together.
 ```
 Techvengers_college_round/
 ├── frontend/                   🎙️ NOVA voice agent — React webapp + browser-execution service + Chrome extension
-├── gesture-control/            🖐️ Full gesture desktop — Electron head/hand cursor with control panel
 ├── gesture-control-component/  📷 Streamlined gesture component — video feed + banners only (this round's build)
 │   └── electron-app/
 └── Pyauto_cmds/                🖱️ OS input bridge — tiny HTTP server turning gestures into real cursor/keys
@@ -25,7 +24,6 @@ Techvengers_college_round/
 | Folder | What it is | Run it |
 |---|---|---|
 | `frontend/` | NOVA voice assistant: voice-reactive orb, mic + webcam, typed/dictated commands, simulated Chromium execution with live frames | `npm install` → `npm run sim` + `npm run dev` |
-| `gesture-control/` | Full-featured gesture desktop: head cursor + hand gestures with calibration UI, sliders, debug readout | `npm install` → `npm start` |
 | `gesture-control-component/` | Drop-in streamlined build: same tracking pipeline, UI is just the video frame + status banners | `npm install` → `npm run dev` |
 | `Pyauto_cmds/` | `ydotool`-backed bridge on `127.0.0.1:8765` (moves the real Wayland cursor where PyAutoGUI can't) | `./daemon.sh &` + `./run.sh` |
 
