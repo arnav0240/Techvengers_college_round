@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 XAUTH=$(ls /run/user/$(id -u)/.mutter-Xwaylandauth.* 2>/dev/null | head -n1 || true)
 if [ -z "${XAUTH:-}" ]; then
   echo "No mutter XWayland auth found — are you on Wayland? Trying plain :0 anyway."
-  DISPLAY=:0 python3 pyautogui_server.py
+  DISPLAY=:0 python3 -u pyautogui_server.py
   exit 0
 fi
 echo "XAUTH=$XAUTH"
@@ -25,7 +25,7 @@ export YDOTOOL_SOCKET="$PWD/.ydotool_socket"
 
 GDK_BACKEND=x11 QT_QPA_PLATFORM=xcb SDL_VIDEODRIVER=x11 \
   DISPLAY=:0 XAUTHORITY="$XAUTH" \
-  python3 pyautogui_server.py
+  python3 -u pyautogui_server.py
 
 # --- Wayland cursor control (REQUIRED on GNOME/Wayland; PyAutoGUI alone is a
 # --- silent no-op there). One-time setup, in your own terminal (needs sudo):

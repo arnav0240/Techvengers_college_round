@@ -17,10 +17,12 @@ Run via ./run.sh (fixes XWayland auth, sets DISPLAY=:0).
 Port: 8765.
 """
 
+import errno
 import json
 import os
 import shutil
 import subprocess
+import sys
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -150,6 +152,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
         self.wfile.write(body)
 
@@ -164,6 +167,15 @@ class Handler(BaseHTTPRequestHandler):
             return json.loads(self.rfile.read(n) or b"{}")
         except json.JSONDecodeError:
             return {}
+
+    def do_OPTIONS(self):
+        # CORS preflight (renderer fetch sends Content-Type: application/json).
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
 
     def do_GET(self):
         if self.path == "/health":
@@ -278,4 +290,14 @@ if __name__ == "__main__":
         "On Wayland, PyAutoGUI alone CANNOT move the cursor — install ydotool "
         "and run ydotoold (see run.sh)."
     )
-    HTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    HTTPServer.allow_reuse_address = True
+    try:
+        HTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+    except OSError as e:
+        if e.errno == errno.EADDRINUSE:
+            print(
+                f"[pyautogui] port {PORT} already in use — "
+                "another instance is already serving, exiting."
+            )
+            sys.exit(0)
+        raise

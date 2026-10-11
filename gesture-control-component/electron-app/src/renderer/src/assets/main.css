@@ -1,0 +1,16 @@
+@import './base.css';
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  background: #14161a;
+  user-select: none;
+}
+
+#root {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}

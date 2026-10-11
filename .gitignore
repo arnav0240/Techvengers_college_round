@@ -13,3 +13,4 @@ venv/
 # runtime / local sockets
 .ydotool_socket
 *.log
+out/
